@@ -25,6 +25,9 @@ class UserAccessibleProduct(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ("user", "product")
+
     def __str__(self) -> str:
         return (
             f"User {self.user.username} has access to the {self.product.title} product"
@@ -37,6 +40,9 @@ class UserLessonStatistics(models.Model):
 
     viewing_time = models.PositiveIntegerField()
     is_viewed = models.BooleanField()
+
+    class Meta:
+        unique_together = ("user", "lesson")
 
     def save(self, *args, **kwargs) -> None:
         self.is_viewed = False
